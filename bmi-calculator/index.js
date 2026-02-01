@@ -8,7 +8,12 @@ const resultInput = document.getElementById("result-input");
 calculateBtn.addEventListener("click", () => {
   const weight = weightInput.value;
   const height = heightInput.value;
-  console.log(typeof height);
+  // console.log(typeof height);
+
+  if (height <= 0 || weight <= 0 || !height || !weight) {
+    alert("Invalid value; Please enter correct height and weight");
+    return;
+  }
   const bmi = weight / (height / 100) ** 2;
 
   const value = getBMIInterpretation(bmi);

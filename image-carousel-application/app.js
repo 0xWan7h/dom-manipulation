@@ -26,75 +26,33 @@ const autoPlayButton = document.getElementById("autoPlayButton");
 const timerDisplay = document.getElementById("timerDisplay");
 
 let currentIndex = 0;
-let autoPlayInterval = null;
-let countdownInterval = null;
 let timeLeft = 5;
-
-function startAutoPlay() {
-  autoPlayButton.textContent = "Stop Auto Play";
-  timeLeft = 5;
-  timerDisplay.textContent = `Next slide in ${timeLeft}s`;
-
-  autoPlayInterval = setInterval(nextSlide, 5000);
-
-  countdownInterval = setInterval(() => {
-    timeLeft--;
-    timerDisplay.textContent = `Next slide in ${timeLeft}s`;
-  }, 1000);
-}
-
-function stopAutoPlay() {
-  autoPlayButton.textContent = "Start Auto Play";
-  timerDisplay.textContent = "";
-  clearInterval(autoPlayInterval);
-  clearInterval(countdownInterval);
-  autoPlayInterval = null;
-  countdownInterval = null;
-}
-
-function resetTimer() {
-  if (!autoPlayInterval) return;
-  stopAutoPlay();
-  startAutoPlay();
-}
-
-autoPlayButton.addEventListener("click", () => {
-  autoPlayInterval ? stopAutoPlay() : startAutoPlay();
-});
-
 function initCarousel() {
   images.forEach((img, index) => {
-    // slides
-    const slide = document.createElement("div");
-    slide.className = "carousel-slide";
-    slide.style.backgroundImage = `url(${img.url})`;
-    track.appendChild(slide);
+    const div = document.createElement("div");
+    div.className = "carousel-slide";
+    div.style.background = `url(${img.url})`;
+    track.appendChild(div);
 
-    // Indicators
-    const dot = document.createElement("div");
-    dot.className = "carousel-indicator";
-    console.log(index);
-    dot.addEventListener("click", () => goToSlide(index));
-
-    nav.appendChild(dot);
+    const indicator = document.createElement("div");
+    indicator.className = "carousel-indicator";
+    nav.appendChild(indicator);
+    indicator.addEventListener("click", () => gotoSlide(index));
   });
   updateCarousel();
 }
 
-function goToSlide(index) {
+function gotoSlide(index) {
   currentIndex = index;
   resetTimer();
   updateCarousel();
 }
 
-function updateCarousel() {
-  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+function updateCaption() {
   caption.textContent = images[currentIndex].caption;
-
-  document.querySelectorAll(".carousel-indicator").forEach((dot, index) => {
-    dot.classList.toggle("active", index === currentIndex);
-  });
 }
+
+initCarousel();
 
 function nextSlide() {
   currentIndex = (currentIndex + 1) % images.length;
@@ -108,7 +66,46 @@ function prevSlide() {
   updateCarousel();
 }
 
+function updateCarousel() {
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  updateCaption();
+  document.querySelectorAll(".carousel-indicator").forEach((dot, index) => {
+    dot.classList.toggle("active", index === currentIndex);
+  });
+}
+
+let autoPlayInterval = null;
+let countInterval = null;
+
+function startAutoPlay() {
+  autoPlayButton.textContent = "Stop Auto Play";
+  timeLeft = 5;
+  timerDisplay.textContent = `Next Slide in ${timeLeft}s`;
+  autoPlayInterval = setInterval(nextSlide, 5000);
+  countInterval = setInterval(() => {
+    timeLeft--;
+    timerDisplay.textContent = `Next Slide in ${timeLeft}s`;
+  }, 1000);
+}
+
+function stopAutoPlay() {
+  autoPlayButton.textContent = "Start Auto Play";
+  timerDisplay.textContent = "";
+  clearInterval(autoPlayInterval);
+  clearInterval(countInterval);
+  autoPlayInterval = null;
+  countInterval = null;
+}
+
+function resetTimer() {
+  if (!autoPlayInterval) return;
+  stopAutoPlay();
+  startAutoPlay();
+}
+
 nextButton.addEventListener("click", nextSlide);
 prevButton.addEventListener("click", prevSlide);
 
-initCarousel();
+autoPlayButton.addEventListener("click", () => {
+  autoPlayInterval ? stopAutoPlay() : startAutoPlay();
+});

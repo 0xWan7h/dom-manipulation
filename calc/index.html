@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="container">
+        <div class="display">
+          <input type="text" id="input-display" readonly />
+        </div>
+        <div>
+          <input type="text" id="result-input" placeholder="Result" disabled />
+        </div>
+        <div class="buttons">
+          <button class="button" onclick="handleClickButton(this)">+</button>
+          <button class="button" onclick="handleClickButton(this)">-</button>
+          <button class="button" onclick="handleClickButton(this)">*</button>
+          <button class="button" onclick="handleClickButton(this)">/</button>
+        </div>
+        <div class="buttons">
+          <button class="button" onclick="handleClickButton(this)">7</button>
+          <button class="button" onclick="handleClickButton(this)">8</button>
+          <button class="button" onclick="handleClickButton(this)">9</button>
+        </div>
+        <div class="buttons">
+          <button class="button" onclick="handleClickButton(this)">4</button>
+          <button class="button" onclick="handleClickButton(this)">5</button>
+          <button class="button" onclick="handleClickButton(this)">6</button>
+        </div>
+        <div class="buttons">
+          <button class="button" onclick="handleClickButton(this)">1</button>
+          <button class="button" onclick="handleClickButton(this)">2</button>
+          <button class="button" onclick="handleClickButton(this)">3</button>
+        </div>
+        <div class="buttons">
+          <button class="button" onclick="handleClickButton(this)">0</button>
+          <button class="button" id="equal-btn">=</button>
+          <button class="button" id="clear-btn">clear</button>
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
